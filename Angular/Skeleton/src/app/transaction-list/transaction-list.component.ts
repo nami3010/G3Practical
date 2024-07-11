@@ -9,9 +9,21 @@ import { Router } from '@angular/router';
 })
 export class TransactionListComponent implements OnInit {
   transactionlist: any = [];
-  constructor(private router: Router, private http: HttpClient) {}
+  selectedItem: any;
+  formattedDate:string='';
+  constructor(private router: Router, private http: HttpClient) {
+   var selectedItem;
+  }
+  formatDate(timestamp: number): string {
+    const date = new Date(timestamp);
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
 
   ngOnInit(): void {
+
 
     this.http.get<any>('http://localhost:8000/api/transections/data') // Replace with your API endpoint
       .subscribe(data => {
@@ -22,16 +34,11 @@ export class TransactionListComponent implements OnInit {
       });
   }
 
-  // Method to format timestamp to DD/MM/YYYY
-  formatDate(timestamp: number): string {
-    const date = new Date(timestamp);
-    const day = ('0' + date.getDate()).slice(-2);
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
-
   viewItem(item: any): void {
-    this.router.navigate(['/transaction-view'], { queryParams: { item: JSON.stringify(item) } });
+   var flag=true;
+    console.log("item",item)
+     this.selectedItem =item;
+     this.formattedDate = this.formatDate(this.selectedItem.date);
+    // this.router.navigate(['/transaction-view'], { queryParams: { item: JSON.stringify(item) } }); ///view/id=""
   }
 }

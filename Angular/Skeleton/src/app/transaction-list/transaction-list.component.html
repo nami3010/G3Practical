@@ -28,4 +28,21 @@
         </div>
         <div class="col-md-2"></div>
     </div>
+    <div *ngIf="selectedItem">
+        <h3>Item Details</h3>
+        <form>
+            <div class="mb-3">
+                <label for="ID" class="form-label">ID</label>
+                <input type="text" class="form-control" value={{selectedItem.id}} name="id" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="Date" class="form-label">Date</label>
+                <input type="text" class="form-control" value={{formattedDate}} name="date" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="Comments" class="form-label">Comments</label>
+                <input type="text" class="form-control" value={{selectedItem.Comments}} name="Comments" [readonly]='false'>
+              </div>
+        </form>
+      </div>
 </div>
